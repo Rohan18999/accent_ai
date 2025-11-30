@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+venv/
+.DS_Store
+
+# Model files - TOO LARGE
+*.pth
+*.pt
+models/
+
+# Uploads
+static/uploads/*
+!static/uploads/.gitkeep

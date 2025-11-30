@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AccentAI - Smart Cuisine Recommender</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <!-- Animated Background -->
+    <div class="background-animation">
+        <div class="circle circle-1"></div>
+        <div class="circle circle-2"></div>
+        <div class="circle circle-3"></div>
+    </div>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <div class="nav-content">
+            <div class="logo">
+                <i class="fas fa-brain"></i>
+                <span>AccentAI</span>
+            </div>
+            <div class="nav-right">
+                <div class="nav-links">
+                    <a href="#home" class="nav-link active"><i class="fas fa-home"></i> Home</a>
+                    <a href="#how-it-works" class="nav-link"><i class="fas fa-info-circle"></i> How It Works</a>
+                </div>
+                <!-- Dark Mode Toggle -->
+                <button class="theme-toggle" id="themeToggle" aria-label="Toggle dark mode">
+                    <i class="fas fa-moon"></i>
+                </button>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container">
+        <!-- Hero Section -->
+        <section class="hero-section" id="home">
+            <div class="hero-content">
+                <h1 class="hero-title">
+                    <span class="gradient-text">AI-Powered</span> Accent Detection
+                </h1>
+                <p class="hero-subtitle">Speak in English and discover authentic regional cuisines tailored to your accent</p>
+                <div class="hero-stats">
+                    <div class="stat-item">
+                        <i class="fas fa-check-circle"></i>
+                        <div>
+                            <strong>99.75%</strong>
+                            <span>Accuracy</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-globe"></i>
+                        <div>
+                            <strong>6</strong>
+                            <span>Regional Accents</span>
+                        </div>
+                    </div>
+                    <div class="stat-item">
+                        <i class="fas fa-utensils"></i>
+                        <div>
+                            <strong>30+</strong>
+                            <span>Cuisines</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Main Interactive Section -->
+        <section class="main-section">
+            <!-- Step Indicator -->
+            <div class="steps-container">
+                <div class="step" id="step1">
+                    <div class="step-circle active">
+                        <i class="fas fa-microphone"></i>
+                    </div>
+                    <span class="step-label">Record</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step2">
+                    <div class="step-circle">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <span class="step-label">Analyze</span>
+                </div>
+                <div class="step-line"></div>
+                <div class="step" id="step3">
+                    <div class="step-circle">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <span class="step-label">Discover</span>
+                </div>
+            </div>
+
+            <!-- Recording Card -->
+            <div class="interactive-card recording-section">
+                <div class="card-badge">
+                    <i class="fas fa-microphone"></i> Step 1
+                </div>
+                
+                <!-- Microphone Visualization -->
+                <div class="mic-visualization">
+                    <div class="pulse-ring pulse-ring-1"></div>
+                    <div class="pulse-ring pulse-ring-2"></div>
+                    <div class="pulse-ring pulse-ring-3"></div>
+                    <button class="mic-button" id="micButton">
+                        <i class="fas fa-microphone"></i>
+                    </button>
+                </div>
+
+                <h2 class="section-title">Record Your Voice</h2>
+                <p class="section-description">
+                    Click the microphone and speak a short phrase in English
+                </p>
+
+                <!-- Example Phrases -->
+                <div class="example-phrases">
+                    <div class="phrase-chip">"I would like to order food"</div>
+                    <div class="phrase-chip">"Can I see the menu please?"</div>
+                    <div class="phrase-chip">"What are today's specials?"</div>
+                </div>
+
+                <!-- Timer Display -->
+                <div class="timer-display" id="timerDisplay" style="display: none;">
+                    <i class="fas fa-circle recording-dot"></i>
+                    <span id="timerText">00:00</span>
+                </div>
+
+                <!-- Control Buttons -->
+                <div class="button-group">
+                    <button class="btn btn-stop" id="stopBtn" style="display: none;">
+                        <i class="fas fa-stop"></i>
+                        Stop Recording
+                    </button>
+                </div>
+
+                <!-- Audio Playback -->
+                <div class="audio-player-container" id="audioPlayerContainer" style="display: none;">
+                    <div class="audio-player">
+                        <button class="play-btn" id="playBtn">
+                            <i class="fas fa-play"></i>
+                        </button>
+                        <audio id="audioPlayback"></audio>
+                        <div class="audio-info">
+                            <span class="audio-label">Your Recording</span>
+                            <div class="audio-wave">
+                                <div class="wave-dot"></div>
+                                <div class="wave-dot"></div>
+                                <div class="wave-dot"></div>
+                                <div class="wave-dot"></div>
+                                <div class="wave-dot"></div>
+                            </div>
+                        </div>
+                        <button class="btn-analyze" id="analyzeBtn">
+                            <i class="fas fa-brain"></i>
+                            Analyze Now
+                        </button>
+                    </div>
+                </div>
+
+                <!-- Status Messages -->
+                <div class="status-message" id="statusMessage"></div>
+            </div>
+
+            <!-- Results Section -->
+            <div class="results-container" id="resultsContainer" style="display: none;">
+                <!-- Accent Result Card -->
+                <div class="interactive-card accent-result">
+                    <div class="card-badge success">
+                        <i class="fas fa-check-circle"></i> Detected
+                    </div>
+                    
+                    <div class="result-icon">
+                        <i class="fas fa-map-marker-alt"></i>
+                    </div>
+
+                    <h2 class="section-title">Your Accent Profile</h2>
+
+                    <div class="accent-details">
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <i class="fas fa-map-marked-alt"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Region</span>
+                                <span class="detail-value" id="regionValue">-</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <i class="fas fa-language"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Native Language</span>
+                                <span class="detail-value" id="languageValue">-</span>
+                            </div>
+                        </div>
+
+                        <div class="detail-row">
+                            <div class="detail-icon">
+                                <i class="fas fa-percentage"></i>
+                            </div>
+                            <div class="detail-content">
+                                <span class="detail-label">Confidence Score</span>
+                                <span class="detail-value confidence" id="confidenceValue">-</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Confidence Meter -->
+                    <div class="confidence-meter">
+                        <div class="meter-label">
+                            <span>Confidence</span>
+                            <span id="confidencePercent">0%</span>
+                        </div>
+                        <div class="meter-bar">
+                            <div class="meter-fill" id="meterFill"></div>
+                        </div>
+                    </div>
+
+                    <!-- Model Info -->
+                    <div class="model-badge">
+                        <i class="fas fa-microchip"></i>
+                        <span id="modelBadge">HuBERT Neural Network</span>
+                    </div>
+                </div>
+
+                <!-- Cuisines Grid -->
+                <div class="cuisines-section">
+                    <div class="section-header">
+                        <i class="fas fa-utensils"></i>
+                        <h2>Recommended Cuisines</h2>
+                    </div>
+                    <p class="cuisines-intro">Based on your <span class="highlight" id="accentHighlight">accent</span>, we recommend these authentic regional dishes</p>
+                    
+                    <div class="cuisines-grid" id="cuisinesGrid"></div>
+
+                    <!-- Action Buttons -->
+                    <div class="action-buttons">
+                        <button class="btn btn-secondary" onclick="location.reload()">
+                            <i class="fas fa-redo"></i>
+                            Try Another Accent
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- How It Works Section -->
+        <section class="info-section" id="how-it-works">
+            <h2 class="section-title centered">How It Works</h2>
+            <div class="process-cards">
+                <div class="process-card">
+                    <div class="process-icon">
+                        <i class="fas fa-microphone-alt"></i>
+                    </div>
+                    <h3>1. Record Your Voice</h3>
+                    <p>Speak a short English phrase using your natural accent</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-icon">
+                        <i class="fas fa-brain"></i>
+                    </div>
+                    <h3>2. AI Analysis</h3>
+                    <p>HuBERT neural network analyzes your speech patterns and accent</p>
+                </div>
+                <div class="process-card">
+                    <div class="process-icon">
+                        <i class="fas fa-utensils"></i>
+                    </div>
+                    <h3>3. Get Recommendations</h3>
+                    <p>Receive personalized regional cuisine suggestions</p>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h4><i class="fas fa-brain"></i> AccentAI</h4>
+                <p>Powered by HuBERT Self-Supervised Learning</p>
+            </div>
+            <div class="footer-section">
+                <h4>Technology</h4>
+                <p><i class="fas fa-check"></i> 99.75% Accuracy</p>
+                <p><i class="fas fa-layer-group"></i> Layer 3 Embeddings</p>
+            </div>
+            <div class="footer-section">
+                <h4>Academic Project</h4>
+                <p><i class="fas fa-graduation-cap"></i> 2025</p>
+            </div>
+        </div>
+    </footer>
+
+    <script src="{{ url_for('static', filename='js/recorder.js') }}"></script>
+</body>
+</html>
